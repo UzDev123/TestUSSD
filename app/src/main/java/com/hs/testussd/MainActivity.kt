@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.hs.testussd.sim.CallBySlot
-import com.hs.testussd.sim.CallsReceiver
 import com.hs.testussd.sim.Carrier
 import com.hs.testussd.sim.Operator
 
@@ -320,20 +319,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d("mlog", "incoming")
-        val callPhone = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-        if (callPhone == PackageManager.PERMISSION_GRANTED) {
-            val callsReceiver = CallsReceiver()
-            callsReceiver.runUssdCode(this)
-            Log.d("mlog", "Permission : granted")
-        } else {
-            Log.d("mlog", "Already: granted")
-        }
-    }
 
     @SuppressLint("SuspiciousIndentation")
     private fun checkAndRequestPermissions(): Boolean {
@@ -342,8 +327,6 @@ class MainActivity : AppCompatActivity() {
         listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE)
         listPermissionsNeeded.add(Manifest.permission.READ_CALL_LOG)
         listPermissionsNeeded.add(Manifest.permission.CALL_PHONE)
-        listPermissionsNeeded.add(Manifest.permission.READ_SMS)
-        listPermissionsNeeded.add(Manifest.permission.WRITE_APN_SETTINGS)
 
         if (listPermissionsNeeded.isNotEmpty()) {
             ActivityCompat.requestPermissions(
